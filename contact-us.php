@@ -35,35 +35,16 @@ $error="Something went wrong. Please try again";
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="keywords" content="">
 <meta name="description" content="">
-<title>CarForYou - Responsive Car Dealer HTML5 Template</title>
-<!--Bootstrap -->
+<title>Contact Us </title>
 <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
-<!--Custome Style -->
 <link rel="stylesheet" href="assets/css/style.css" type="text/css">
-<!--OWL Carousel slider-->
 <link rel="stylesheet" href="assets/css/owl.carousel.css" type="text/css">
 <link rel="stylesheet" href="assets/css/owl.transitions.css" type="text/css">
-<!--slick-slider -->
 <link href="assets/css/slick.css" rel="stylesheet">
-<!--bootstrap-slider -->
 <link href="assets/css/bootstrap-slider.min.css" rel="stylesheet">
-<!--FontAwesome Font Style -->
 <link href="assets/css/font-awesome.min.css" rel="stylesheet">
-
-<!-- SWITCHER -->
-		<link rel="stylesheet" id="switcher-css" type="text/css" href="assets/switcher/css/switcher.css" media="all" />
-		<link rel="alternate stylesheet" type="text/css" href="assets/switcher/css/red.css" title="red" media="all" data-default-color="true" />
-		<link rel="alternate stylesheet" type="text/css" href="assets/switcher/css/orange.css" title="orange" media="all" />
-		<link rel="alternate stylesheet" type="text/css" href="assets/switcher/css/blue.css" title="blue" media="all" />
-		<link rel="alternate stylesheet" type="text/css" href="assets/switcher/css/pink.css" title="pink" media="all" />
-		<link rel="alternate stylesheet" type="text/css" href="assets/switcher/css/green.css" title="green" media="all" />
-		<link rel="alternate stylesheet" type="text/css" href="assets/switcher/css/purple.css" title="purple" media="all" />
-        
-<!-- Fav and touch icons -->
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/images/favicon-icon/apple-touch-icon-144-precomposed.png">
-<link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/images/favicon-icon/apple-touch-icon-114-precomposed.html">
-<link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/images/favicon-icon/apple-touch-icon-72-precomposed.png">
-<link rel="apple-touch-icon-precomposed" href="assets/images/favicon-icon/apple-touch-icon-57-precomposed.png">
+<script src="https://kit.fontawesome.com/59c5db4307.js" crossorigin="anonymous"></script>
+<link rel="alternate stylesheet" type="text/css" href="assets/switcher/css/red.css" title="red" media="all" data-default-color="true" />
 <link rel="shortcut icon" href="assets/images/favicon-icon/favicon.png">
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
  <style>
@@ -196,8 +177,6 @@ p {
   margin: 0;
   padding: 0;
 }
-
-/* Section top bottom gap */
 .section-gap {
   padding: 4.5rem 0;
 }
@@ -213,10 +192,6 @@ p {
     padding: 3rem 0;
   }
 }
-
-/* / Section top bottom gap */
-
-/* title-styling */
 h3.global-title {
   font-size: 40px;
   line-height: 45px;
@@ -246,8 +221,6 @@ h3.global-title {
   }
 }
 
-/* / title-styling */
-/* simple contact form */
 .contact-form {
   background: f1f5fe;
 }
@@ -317,11 +290,7 @@ button.btn-contact {
     </style>
 </head>
 <body>
-
-<<!-- Start Switcher -->
-<?php include('includes/colorswitcher.php');?>
-<!-- /Switcher -->  
-        
+<?php include('includes/colorswitcher.php');?>       
 <!--Header-->
 <?php include('includes/header.php');?>
 <!-- /Header --> 
@@ -339,10 +308,8 @@ button.btn-contact {
       </ul>
     </div>
   </div>
-  <!-- Dark Overlay-->
   <div class="dark-overlay"></div>
 </section>
-<!-- /Page Header--> 
 <section class="w3l-simple-contact-form1">
     <div class="contact-form section-gap">
       <div class="wrapper">
@@ -366,7 +333,6 @@ button.btn-contact {
               <textarea name="Message" class="form-control" id="Message" placeholder="Message"
                 required=""></textarea>
               <button type="submit" class="btn btn-contact">Send Message</button>
-              <!-- <input type="button" class="btn btn-contact" onclick="sendmail();"  value="Send Message"> -->
 
             </form>
           </div>
@@ -374,14 +340,7 @@ button.btn-contact {
       </div>
     </div>
   </section>
-
-
-    <!-- scroll top  -->
-
-    <!-- jquery cdn link  -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-    <!-- custom js file link  -->
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
     <script src="https://smtpjs.com/v3/smtp.js"></script>
     <script>
@@ -409,7 +368,6 @@ button.btn-contact {
       $('.scroll-top').hide();
     }
 
-    // scroll spy
 
     $('section').each(function(){
 
@@ -453,10 +411,8 @@ button.btn-contact {
 			var subject = $('#Subject').val();
       var message = $('#Message').val();
 
-			// var body = $('#body').val();
-
 			var Body='Name: '+name+'<br>Email: '+email+'<br>Subject: '+subject+'<br>Message: '+message;
-			//console.log(name, phone, email, message);
+	
 
 			Email.send({
         SecureToken:"fbf31702-bb7f-4a4e-9c1c-4ccf17ee777f",
@@ -466,7 +422,7 @@ button.btn-contact {
 				Body: Body
 			}).then(
 				message =>{
-					//console.log (message);
+				
 					if(message=='OK'){
 					alert('Your mail has been send. Thank you for connecting.');
 					}
@@ -486,8 +442,6 @@ button.btn-contact {
     </script>
 
 
-
-
 <!--Footer -->
 <?php include('includes/footer.php');?>
 <!-- /Footer--> 
@@ -502,7 +456,6 @@ button.btn-contact {
 
 <!--Register-Form -->
 <?php include('includes/registration.php');?>
-
 <!--/Register-Form --> 
 
 <!--Forgot-password-Form -->
@@ -513,15 +466,10 @@ button.btn-contact {
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script> 
 <script src="assets/js/interface.js"></script> 
-<!--Switcher-->
 <script src="assets/switcher/js/switcher.js"></script>
-<!--bootstrap-slider-JS--> 
 <script src="assets/js/bootstrap-slider.min.js"></script> 
-<!--Slider-JS--> 
 <script src="assets/js/slick.min.js"></script> 
 <script src="assets/js/owl.carousel.min.js"></script>
 
 </body>
-
-<!-- Mirrored from themes.webmasterdriver.net/carforyou/demo/contact-us.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 16 Jun 2017 07:26:55 GMT -->
 </html>
