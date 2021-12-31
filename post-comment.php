@@ -7,28 +7,27 @@ if(strlen($_SESSION['login'])==0)
 header('location:index.php');
 }
 else{
-if(isset($_POST['updateprofile']))
+if(isset($_POST['submit']))
   {
-$name=$_POST['fullname'];
-$mobileno=$_POST['mobilenumber'];
-$dob=$_POST['dob'];
-$adress=$_POST['address'];
-$city=$_POST['city'];
-$country=$_POST['country'];
+$testimonoial=$_POST['testimonial'];
 $email=$_SESSION['login'];
-$sql="update tblusers set FullName=:name,ContactNo=:mobileno,dob=:dob,Address=:adress,City=:city,Country=:country where EmailId=:email";
+$sql="INSERT INTO  tbltestimonial(UserEmail,Testimonial) VALUES(:email,:testimonoial)";
 $query = $dbh->prepare($sql);
-$query->bindParam(':name',$name,PDO::PARAM_STR);
-$query->bindParam(':mobileno',$mobileno,PDO::PARAM_STR);
-$query->bindParam(':dob',$dob,PDO::PARAM_STR);
-$query->bindParam(':adress',$adress,PDO::PARAM_STR);
-$query->bindParam(':city',$city,PDO::PARAM_STR);
-$query->bindParam(':country',$country,PDO::PARAM_STR);
+$query->bindParam(':testimonoial',$testimonoial,PDO::PARAM_STR);
 $query->bindParam(':email',$email,PDO::PARAM_STR);
+
 $query->execute();
-$msg="Profile Updated Successfully";
+$lastInsertId = $dbh->lastInsertId();
+if($lastInsertId)
+{
+$msg="Testimonail submitted successfully";
+}
+else 
+{
+$error="Something went wrong. Please try again";
 }
 
+}
 ?>
   <!DOCTYPE HTML>
 <html lang="en">
@@ -38,7 +37,7 @@ $msg="Profile Updated Successfully";
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="keywords" content="">
 <meta name="description" content="">
-<title>Car Cloud  | My Profile</title>
+<title>Car Cloud |Post Comment</title>
 <!--Bootstrap -->
 <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
 <link rel="stylesheet" href="assets/css/style.css" type="text/css">
@@ -48,10 +47,11 @@ $msg="Profile Updated Successfully";
 <link href="assets/css/bootstrap-slider.min.css" rel="stylesheet">
 <link href="assets/css/font-awesome.min.css" rel="stylesheet">
 <script src="https://kit.fontawesome.com/59c5db4307.js" crossorigin="anonymous"></script>
-<link rel="alternate stylesheet" type="text/css" href="assets/switcher/css/red.css" title="red" media="all" data-default-color="true" />
+
+		<link rel="stylesheet" id="switcher-css" type="text/css" href="assets/switcher/css/switcher.css" media="all" />
+		<link rel="alternate stylesheet" type="text/css" href="assets/switcher/css/red.css" title="red" media="all" data-default-color="true" />
 <link rel="shortcut icon" href="assets/images/favicon-icon/favicon.png">
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet"> 
-<script src="https://kit.fontawesome.com/59c5db4307.js" crossorigin="anonymous"></script>
  <style>
     .errorWrap {
     padding: 10px;
@@ -72,25 +72,23 @@ $msg="Profile Updated Successfully";
     </style>
 </head>
 <body>
-<?php include('includes/colorswitcher.php');?>
-
-        
+<?php include('includes/colorswitcher.php');?>       
 <!--Header-->
 <?php include('includes/header.php');?>
-<!-- /Header --> 
 <!--Page Header-->
 <section class="page-header profile_page">
   <div class="container">
     <div class="page-header_wrap">
       <div class="page-heading">
-        <h1>Your Profile</h1>
+        <h1>Post Comment</h1>
       </div>
       <ul class="coustom-breadcrumb">
         <li><a href="#">Home</a></li>
-        <li>Profile</li>
+        <li>Post Comment</li>
       </ul>
     </div>
   </div>
+  <!-- Dark Overlay-->
   <div class="dark-overlay"></div>
 </section>
 <!-- /Page Header--> 
@@ -116,7 +114,7 @@ foreach($results as $result)
       <div class="dealer_info">
         <h5><?php echo htmlentities($result->FullName);?></h5>
         <p><?php echo htmlentities($result->Address);?><br>
-          <?php echo htmlentities($result->City);?>&nbsp;<?php echo htmlentities($result->Country);?></p>
+          <?php echo htmlentities($result->City);?>&nbsp;<?php echo htmlentities($result->Country); }}?></p>
       </div>
     </div>
   
@@ -125,52 +123,16 @@ foreach($results as $result)
         <?php include('includes/sidebar.php');?>
       <div class="col-md-6 col-sm-8">
         <div class="profile_wrap">
-          <h5 class="uppercase underline">Genral Settings</h5>
-          <?php  
-         if($msg){?><div class="succWrap"><strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?> </div><?php }?>
-          <form  method="post">
-           <div class="form-group">
-              <label class="control-label">Reg Date -</label>
-             <?php echo htmlentities($result->RegDate);?>
-            </div>
-             <?php if($result->UpdationDate!=""){?>
+          <h5 class="uppercase underline">Post a Comment</h5>
+            <?php if($error){?><div class="errorWrap"><strong>ERROR</strong>:<?php echo htmlentities($error); ?> </div><?php } 
+        else if($msg){?><div class="succWrap"><strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?> </div><?php }?>
+          <form  method="post">        
             <div class="form-group">
-              <label class="control-label">Last Update at  -</label>
-             <?php echo htmlentities($result->UpdationDate);?>
-            </div>
-            <?php } ?>
+              <label class="control-label">Comment</label>
+              <textarea class="form-control white_bg" name="testimonial" rows="4" required=""></textarea>
+            </div>       
             <div class="form-group">
-              <label class="control-label">Full Name</label>
-              <input class="form-control white_bg" name="fullname" value="<?php echo htmlentities($result->FullName);?>" id="fullname" type="text"  required>
-            </div>
-            <div class="form-group">
-              <label class="control-label">Email Address</label>
-              <input class="form-control white_bg" value="<?php echo htmlentities($result->EmailId);?>" name="emailid" id="email" type="email" required readonly>
-            </div>
-            <div class="form-group">
-              <label class="control-label">Phone Number</label>
-              <input class="form-control white_bg" name="mobilenumber" value="<?php echo htmlentities($result->ContactNo);?>" id="phone-number" type="text" required>
-            </div>
-            <div class="form-group">
-              <label class="control-label">Date of Birth&nbsp;(dd/mm/yyyy)</label>
-              <input class="form-control white_bg" value="<?php echo htmlentities($result->dob);?>" name="dob" placeholder="dd/mm/yyyy" id="birth-date" type="text" >
-            </div>
-            <div class="form-group">
-              <label class="control-label">Your Address</label>
-              <textarea class="form-control white_bg" name="address" rows="4" ><?php echo htmlentities($result->Address);?></textarea>
-            </div>
-            <div class="form-group">
-              <label class="control-label">Country</label>
-              <input class="form-control white_bg"  id="country" name="country" value="<?php echo htmlentities($result->City);?>" type="text">
-            </div>
-            <div class="form-group">
-              <label class="control-label">City</label>
-              <input class="form-control white_bg" id="city" name="city" value="<?php echo htmlentities($result->City);?>" type="text">
-            </div>
-            <?php }} ?>
-           
-            <div class="form-group">
-              <button type="submit" name="updateprofile" class="btn">Save Changes <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></button>
+              <button type="submit" name="submit" class="btn">Save  <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></button>
             </div>
           </form>
         </div>
@@ -178,7 +140,6 @@ foreach($results as $result)
     </div>
   </div>
 </section>
-<!--/Profile-setting--> 
 
 <<!--Footer -->
 <?php include('includes/footer.php');?>
@@ -194,8 +155,6 @@ foreach($results as $result)
 
 <!--Register-Form -->
 <?php include('includes/registration.php');?>
-<!--/Register-Form --> 
-
 <!--Forgot-password-Form -->
 <?php include('includes/forgotpassword.php');?>
 <!--/Forgot-password-Form --> 
@@ -205,7 +164,7 @@ foreach($results as $result)
 <script src="assets/js/bootstrap.min.js"></script> 
 <script src="assets/js/interface.js"></script> 
 <script src="assets/switcher/js/switcher.js"></script>
-<script src="assets/js/bootstrap-slider.min.js"></script> 
+<script src="assets/js/bootstrap-slider.min.js"></script>  
 <script src="assets/js/slick.min.js"></script> 
 <script src="assets/js/owl.carousel.min.js"></script>
 
